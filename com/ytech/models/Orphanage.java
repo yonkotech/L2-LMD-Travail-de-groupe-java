@@ -4,21 +4,22 @@ import java.util.Date;
 import java.util.UUID;
 
 public class Orphanage {
-    private String id;
-    private String name;
-    private String location;
-    private int capacity;
-    private int currentChildren;
-    private String director;
-    private String phoneNumber;
-    private String email;
+    private int id;
+    private String name;//
+    private String location;//
+    private int capacity;//
+    private int currentChildren;//
+    private String director;//
+    private String phoneNumber;//
+    private String email;//
     private Date creationDate;
+    public static int lastId = 0;
 
     // Constructeur complet
-    public Orphanage(String id, String name, String location, int capacity,
+    public Orphanage(String name, String location, int capacity,
             int currentChildren, String director, String phoneNumber,
             String email, Date creationDate) {
-        this.id = id;
+        this.id = lastId;
         this.name = name;
         this.location = location;
         this.capacity = capacity;
@@ -27,16 +28,13 @@ public class Orphanage {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.creationDate = creationDate;
-    }
 
-    // Constructeur simplifié
-    public Orphanage(String name, String location, int capacity) {
-        this(UUID.randomUUID().toString(), name, location, capacity,
-                0, "", "", "", new Date());
+        Orphanage.lastId++;
+
     }
 
     // Getters
-    public String getId() {
+    public int getId() {
         return id;
     }
 

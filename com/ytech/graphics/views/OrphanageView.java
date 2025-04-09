@@ -2,6 +2,7 @@ package com.ytech.graphics.views;
 
 import com.ytech.graphics.components.*;
 import com.ytech.graphics.layouts.ListItem;
+import com.ytech.main.App;
 import com.ytech.models.Orphanage;
 
 import javax.swing.*;
@@ -16,8 +17,6 @@ public class OrphanageView extends YPanel {
     private JPanel listPanel;
 
     public OrphanageView() {
-        // Initialiser quelques données de test
-        initializeSampleData();
 
         // Configurer le layout principal
         setLayout(new BorderLayout());
@@ -25,7 +24,8 @@ public class OrphanageView extends YPanel {
 
         // Créer le titre
         JLabel titleLabel = new JLabel("Gestion des Orphelinats");
-        titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD, 24f));
+        titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD, 48f));
+        titleLabel.setForeground(YComponent.primaryColor);
         add(titleLabel, BorderLayout.NORTH);
 
         // Panel pour les contrôles de filtrage
@@ -44,44 +44,18 @@ public class OrphanageView extends YPanel {
         add(scrollPane, BorderLayout.CENTER);
 
         // Bouton d'ajout
-        YButton addButton = new YButton("+ Ajouter un orphelinat", 0); // Type 0 = vert
-        addButton.addActionListener(this::addOrphanage);
+        YButton addButton = new YButton("Ajouter un orphelinat", 0); // Type 0 = vert
+        addButton.addActionListener(e -> goToPage(new OrphanageSubscriptionView()));
         add(addButton, BorderLayout.SOUTH);
 
         // Charger la liste
         refreshOrphanageList();
     }
 
-    private void initializeSampleData() {
-        orphanages.add(new Orphanage(
-                "OP-001",
-                "Orphelinat Saint-Louis",
-                "Paris",
-                120,
-                115,
-                "Marie Dupont",
-                "01 23 45 67 89",
-                "contact@saint-louis.org",
-                new Date(120, 0, 15) // 15 janvier 2020
-        ));
-
-        orphanages.add(new Orphanage(
-                "OP-002",
-                "Maison de l'Espoir",
-                "Lyon",
-                80,
-                72,
-                "Jean Martin",
-                "04 56 78 90 12",
-                "info@maison-espoir.org",
-                new Date(118, 5, 10) // 10 juin 2018
-        ));
-    }
-
     private void refreshOrphanageList() {
         listPanel.removeAll();
 
-        for (Orphanage orphanage : orphanages) {
+        for (Orphanage orphanage : App.orphanages) {
             ListItem item = new ListItem(orphanage.getName(),
                     "Lieu: " + orphanage.getLocation() +
                             " | Capacité: " + orphanage.getCapacity(),
@@ -89,7 +63,7 @@ public class OrphanageView extends YPanel {
 
             // Boutons d'action
             YButton detailsButton = new YButton("Détails");
-            detailsButton.addActionListener(e -> showDetails(orphanage));
+            detailsButton.addActionListener(e -> goToPage(orphanage));
 
             YButton editButton = new YButton("Modifier");
             editButton.addActionListener(e -> editOrphanage(orphanage));
@@ -109,9 +83,23 @@ public class OrphanageView extends YPanel {
         listPanel.repaint();
     }
 
+    private void goToPage(Orphanage orphanage) {
+        App.lastOrphanage = orphanage;
+        App.window.panel.removeAll();
+        App.window.panel.add(new OrphanageDetailView(orphanage));
+        App.window.revalidate();
+        App.window.repaint();
+    }
+
+    private void goToPage(YPanel target) {
+        App.window.panel.removeAll();
+        App.window.panel.add(target);
+        App.window.revalidate();
+        App.window.repaint();
+    }
+
     private void addOrphanage(ActionEvent e) {
-        // Ici vous implémenteriez la logique d'ajout
-        JOptionPane.showMessageDialog(this, "Fonctionnalité d'ajout à implémenter");
+        App.window.setContentPane(new OrphanageSubscriptionView());
     }
 
     private void showDetails(Orphanage orphanage) {
@@ -137,37 +125,6 @@ public class OrphanageView extends YPanel {
 
         if (confirm == JOptionPane.YES_OPTION) {
             orphanages.remove(orphanage);
-            refreshOrphanageList();
-        }
-    }
-
-    private void showAddOrphanageDialog() {
-        JPanel formPanel = new JPanel(new GridLayout(0, 2, 10, 5));
-
-        JTextField nameField = new JTextField();
-        JTextField locationField = new JTextField();
-        JSpinner capacitySpinner = new JSpinner(new SpinnerNumberModel(50, 10, 500, 1));
-
-        formPanel.add(new JLabel("Nom:"));
-        formPanel.add(nameField);
-        formPanel.add(new JLabel("Lieu:"));
-        formPanel.add(locationField);
-        formPanel.add(new JLabel("Capacité:"));
-        formPanel.add(capacitySpinner);
-
-        int result = JOptionPane.showConfirmDialog(
-                this,
-                formPanel,
-                "Ajouter un nouvel orphelinat",
-                JOptionPane.OK_CANCEL_OPTION,
-                JOptionPane.PLAIN_MESSAGE);
-
-        if (result == JOptionPane.OK_OPTION) {
-            Orphanage newOrphanage = new Orphanage(
-                    nameField.getText(),
-                    locationField.getText(),
-                    (Integer) capacitySpinner.getValue());
-            orphanages.add(newOrphanage);
             refreshOrphanageList();
         }
     }

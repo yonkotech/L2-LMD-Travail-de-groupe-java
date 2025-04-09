@@ -5,6 +5,8 @@ import javax.swing.*;
 import com.ytech.graphics.components.YComponent;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -24,6 +26,8 @@ public class ListItem extends JPanel {
     private Color backgroundOddColor = new Color(230, 230, 230);
     private Color hoverColor = new Color(50, 50, 50);
     private Color pressedColor = new Color(160, 160, 160);
+
+    private ActionEvent clickedAction;
 
     public ListItem() {
         this("", "", false);
@@ -46,6 +50,7 @@ public class ListItem extends JPanel {
         titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD, 24f));
         titleLabel.setForeground(YComponent.primaryColor);
         titleLabel.setPreferredSize(new Dimension(getWidth() / 2, titleLabel.getHeight()));
+        titleLabel.getInsets(new Insets(10, 100, 10, 10));
 
         subtitleLabel = new JLabel(subtitle);
         subtitleLabel.setFont(subtitleLabel.getFont().deriveFont(Font.ITALIC, 14f));
@@ -78,7 +83,12 @@ public class ListItem extends JPanel {
         buttonsPanel.setOpaque(false);
     }
 
+    public void setActionEvent(ActionEvent a) {
+        this.clickedAction = a;
+    }
+
     private void setupMouseListeners() {
+
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -104,6 +114,7 @@ public class ListItem extends JPanel {
             @Override
             public void mouseReleased(MouseEvent e) {
                 pressed = false;
+
                 setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
                 updateAppearance();
             }
