@@ -13,6 +13,15 @@ public class Orphan {
     private LocalDate leftDate;
     private String motif;
     private boolean avaible = true;
+    private boolean sexe = true;
+
+    public boolean isSexe() {
+        return sexe;
+    }
+
+    public void setSexe(boolean sexe) {
+        this.sexe = sexe;
+    }
 
     public static int lastId = 0;
 
@@ -25,23 +34,24 @@ public class Orphan {
     }
 
     // Constructeur complet
-    public Orphan(String firstName, String lastName, int age, LocalDate comingDate, int orphanage_id) {
+    public Orphan(String firstName, String lastName, int age, LocalDate comingDate, int orphanage_id, boolean sexe) {
         this.id = Orphan.lastId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
         this.comingDate = comingDate;
         this.orphanage_id = orphanage_id;
-
+        this.sexe = sexe;
+        App.orphanages.get(orphanage_id).setCurrentChildren(App.orphanages.get(orphanage_id).getCurrentChildren() + 1);
         Orphan.lastId++;
     }
 
     public String getFormattedInfo() {
         return String.format(
-                "<html><b>%s</b><br>" +
+                "<html><b>%s</b><br>" + (sexe ? "Homme" : "Femme") + "<br>" +
                         "Date d'arrive : " + App.formatDate(comingDate) + "<br>"
                         + "Age: %s ans<br>"
-                        + (isAvaible() ? "Peut etre adopte: " : getMotif() + "le " + App.formatDate(leftDate)),
+                        + (isAvaible() ? "Peut etre adopte" : getMotif() + ": le " + App.formatDate(leftDate)),
 
                 fullName(), age);
     }

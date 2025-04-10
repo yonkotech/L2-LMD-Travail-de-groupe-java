@@ -1,21 +1,13 @@
 package com.ytech.graphics.views;
 
 import com.ytech.graphics.components.*;
-import com.ytech.graphics.layouts.ListItem;
 import com.ytech.main.App;
 import com.ytech.models.Orphanage;
-import com.ytech.models.Orphan;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class OrphanageSubscriptionView extends YPanel {
     private Orphanage orphanage;
-    private List<Orphan> orphans = new ArrayList<>();
     private JPanel listPanel;
 
     private YTextField nameField = new YTextField("Nom de l'orphelinat");

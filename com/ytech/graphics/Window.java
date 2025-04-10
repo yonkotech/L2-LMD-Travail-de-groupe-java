@@ -1,6 +1,7 @@
 package com.ytech.graphics;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.util.ArrayList;
@@ -33,6 +34,8 @@ public class Window extends JFrame {
         panel.add(new OrphanageView());
 
         this.setSize(w, h);
+        this.setMinimumSize(new Dimension(w, h));
+        this.setTitle("Orphelinats manager");
 
         this.setContentPane(panel);
         this.setVisible(true);

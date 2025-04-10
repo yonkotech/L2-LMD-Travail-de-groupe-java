@@ -1,17 +1,12 @@
 package com.ytech.graphics.views;
 
 import com.ytech.graphics.components.*;
-import com.ytech.graphics.layouts.ListItem;
 import com.ytech.main.App;
 import com.ytech.models.Orphanage;
 import com.ytech.models.Orphan;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class OrphanSubscriptionView extends YPanel {
     private Orphanage orphanage;
@@ -21,11 +16,13 @@ public class OrphanSubscriptionView extends YPanel {
     private YTextField firstNameField = new YTextField("Nom de l'orphelin");
     private YTextField lastNameField = new YTextField("Post de l'orphelin");
     private YTextField ageField = new YTextField("Age de l'orphelin");
+    private YRadioButton sexeM = new YRadioButton("Homme");
+    private YRadioButton sexeF = new YRadioButton("Femme");
 
     private boolean allFieldsFilled() {
         return !(firstNameField.getText().isBlank() ||
                 lastNameField.getText().isBlank() ||
-                ageField.getText().isBlank());
+                ageField.getText().isBlank() || !(sexeF.isSelected() || sexeM.isSelected()));
     }
 
     private boolean allNumbersValid() {
@@ -68,12 +65,14 @@ public class OrphanSubscriptionView extends YPanel {
                                 firstNameField.getText(), lastNameField.getText(),
                                 Integer.parseInt(ageField.getText()),
                                 this.orphan.getComingDate(),
-                                orphanage.getId()));
+                                orphanage.getId(), sexeM.isSelected()));
+
                     } else {
 
                         App.addOrphan(firstNameField.getText(), lastNameField.getText(),
                                 Integer.parseInt(ageField.getText()),
-                                orphanage.getId());
+                                orphanage.getId(), sexeM.isSelected());
+
                     }
 
                 }
@@ -88,7 +87,16 @@ public class OrphanSubscriptionView extends YPanel {
         listPanel.add(firstNameField);
         listPanel.add(lastNameField);
         listPanel.add(ageField);
-        listPanel.add(new YPanel());
+
+        YPanel sexe = new YPanel();
+
+        ButtonGroup bg = new ButtonGroup();
+        bg.add(sexeM);
+        bg.add(sexeF);
+        sexe.add(sexeM, BorderLayout.WEST);
+        sexe.add(sexeF, BorderLayout.EAST);
+
+        listPanel.add(sexe);
         listPanel.add(new YPanel());
     }
 
@@ -138,6 +146,9 @@ public class OrphanSubscriptionView extends YPanel {
         this.firstNameField.setText(orphan.getFirstName());
         this.lastNameField.setText(orphan.getLastName());
         this.ageField.setText("" + orphan.getAge());
+
+        sexeM.setSelected(orphan.isSexe());
+        sexeF.setSelected(!orphan.isSexe());
 
     }
 

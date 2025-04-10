@@ -8,10 +8,8 @@ import com.ytech.models.Orphan;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class OrphanageDetailView extends YPanel {
@@ -51,7 +49,7 @@ public class OrphanageDetailView extends YPanel {
         YPanel bottom = new YPanel();
         // Bouton d'ajout
         YButton addButton = new YButton("AJOUTER UN ORPHELIN", 0); // Type 0 = vert
-        addButton.addActionListener(e -> goToPage(new OrphanSubscriptionView(this.orphanage)));
+        addButton.addActionListener(e -> addOrphan());
         YButton backButton = new YButton("RETOUR", 1);
         backButton.addActionListener(e -> goToPage(new OrphanageView()));
 
@@ -61,6 +59,21 @@ public class OrphanageDetailView extends YPanel {
 
         // Charger la liste
         refreshOrphanageList();
+    }
+
+    private void addOrphan() {
+        if (this.orphanage.getCurrentChildren() >= this.orphanage.getCapacity()) {
+            JLabel detailsLabel = new JLabel("L'orhpelinat est sature");
+            detailsLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    detailsLabel,
+                    "Saturation",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            goToPage(new OrphanSubscriptionView(this.orphanage));
+        }
     }
 
     private void refreshOrphanageList() {

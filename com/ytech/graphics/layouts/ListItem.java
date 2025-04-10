@@ -20,8 +20,26 @@ public class ListItem extends JPanel {
     private boolean pressed = false;
 
     private Color backgroundColor = new Color(200, 200, 200);
+
+    public Color getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    public void setBackgroundColor(Color backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
+
     private Color backgroundOddColor = new Color(230, 230, 230);
-    private Color hoverColor = new Color(50, 50, 50);
+
+    public Color getBackgroundOddColor() {
+        return backgroundOddColor;
+    }
+
+    public void setBackgroundOddColor(Color backgroundOddColor) {
+        this.backgroundOddColor = backgroundOddColor;
+    }
+
+    private Color hoverColor = new Color(20, 20, 20);
     private Color pressedColor = new Color(160, 160, 160);
 
     public ListItem() {
@@ -54,13 +72,21 @@ public class ListItem extends JPanel {
         buttonsPanel = new JPanel();
     }
 
+    private Color getColor() {
+        if (odd) {
+            return new Color(50, 50, 50);
+        }
+        return new Color(100, 100, 100);
+    }
+
     private void layoutComponents() {
         removeAll();
         setLayout(new BorderLayout(10, 10));
 
         JPanel textPanel = new JPanel();
-        textPanel.setBackground(Color.DARK_GRAY);
+        textPanel.setBackground(getColor());
         textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
+        textPanel.setPreferredSize(new Dimension(getWidth() / 2, getHeight()));
         textPanel.setOpaque(false);
         textPanel.add(titleLabel);
         textPanel.add(subtitleLabel);
@@ -68,10 +94,10 @@ public class ListItem extends JPanel {
         add(textPanel, BorderLayout.CENTER);
 
         JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.TRAILING, 5, 5));
-        rightPanel.setBackground(Color.DARK_GRAY);
+        rightPanel.setBackground(getColor());
         rightPanel.setOpaque(false);
         rightPanel.add(buttonsPanel);
-        buttonsPanel.setBackground(Color.DARK_GRAY);
+        buttonsPanel.setBackground(getColor());
         add(rightPanel, BorderLayout.EAST);
 
         buttonsPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
@@ -119,10 +145,8 @@ public class ListItem extends JPanel {
             bgColor = pressedColor;
         } else if (hover) {
             bgColor = hoverColor;
-        } else if (odd) {
-            bgColor = backgroundOddColor;
         } else {
-            bgColor = backgroundColor;
+            bgColor = getColor();
         }
 
         setBackground(bgColor);

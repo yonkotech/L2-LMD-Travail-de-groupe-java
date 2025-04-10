@@ -7,13 +7,8 @@ import com.ytech.models.Orphanage;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class OrphanageView extends YPanel {
-    private List<Orphanage> orphanages = new ArrayList<>();
     private JPanel listPanel;
 
     public OrphanageView() {
@@ -55,11 +50,13 @@ public class OrphanageView extends YPanel {
     private void refreshOrphanageList() {
         listPanel.removeAll();
 
+        int i = 0;
         for (Orphanage orphanage : App.orphanages) {
             ListItem item = new ListItem(orphanage.getName(),
-                    "Lieu: " + orphanage.getLocation() +
+                    "Adresse: " + orphanage.getLocation() +
                             " | Capacité: " + orphanage.getCapacity(),
-                    orphanages.indexOf(orphanage) % 2 == 0);
+                    i % 2 == 0);
+            i++;
 
             // Boutons d'action
             YButton detailsButton = new YButton("Details");
