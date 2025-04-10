@@ -11,6 +11,15 @@ public class YTextField extends JPanel {
     private JTextField textField;
     private JLabel floatingLabel;
     private Color borderColor;
+
+    public Color getBorderColor() {
+        return borderColor;
+    }
+
+    public void setBorderColor(Color borderColor) {
+        this.borderColor = borderColor;
+    }
+
     private Color focusColor;
     private Color labelColor;
 

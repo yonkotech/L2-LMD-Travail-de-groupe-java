@@ -1,10 +1,8 @@
 package com.ytech.graphics.components;
 
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Insets;
 import java.awt.RenderingHints;
 
 import javax.swing.BorderFactory;
@@ -12,7 +10,6 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 import javax.swing.plaf.basic.BasicComboPopup;
@@ -45,22 +42,6 @@ public class YComboBox<T> extends JComboBox<T> {
             BasicComboPopup popup = (BasicComboPopup) super.createPopup();
             popup.setBorder(BorderFactory.createLineBorder(YComponent.primaryColor, 2));
             return popup;
-        }
-
-        public void layoutContainer(Container parent) {
-            // super.layoutContainer(parent);
-
-            if (arrowButton != null) {
-                Insets insets = comboBox.getInsets();
-                int width = comboBox.getWidth();
-                int height = comboBox.getHeight();
-
-                arrowButton.setBounds(insets.left, insets.top, 30, height - insets.top - insets.bottom);
-                if (editor != null) {
-                    editor.setBounds(insets.left + 30, insets.top, width - insets.left - insets.right - 30,
-                            height - insets.top - insets.bottom);
-                }
-            }
         }
 
         private static class ArrowIcon implements Icon {

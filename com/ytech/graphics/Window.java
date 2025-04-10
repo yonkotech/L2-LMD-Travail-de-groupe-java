@@ -1,41 +1,15 @@
 package com.ytech.graphics;
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
-import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.LayoutManager;
-import java.awt.Panel;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-
-import com.ytech.graphics.components.YButton;
-import com.ytech.graphics.components.YCheckbox;
-import com.ytech.graphics.components.YComboBox;
-import com.ytech.graphics.components.YComponent;
 import com.ytech.graphics.components.YPanel;
-import com.ytech.graphics.components.YRadioButton;
-import com.ytech.graphics.components.YTextField;
-import com.ytech.graphics.layouts.ListItem;
-import com.ytech.graphics.views.OrphanageDetailView;
 import com.ytech.graphics.views.OrphanageView;
-import com.ytech.main.App;
 
 public class Window extends JFrame {
 

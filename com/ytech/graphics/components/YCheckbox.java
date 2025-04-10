@@ -8,7 +8,6 @@ import java.awt.RenderingHints;
 
 import javax.swing.Icon;
 import javax.swing.JCheckBox;
-import javax.swing.JComponent;
 
 public class YCheckbox extends JCheckBox {
 

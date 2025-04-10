@@ -1,9 +1,6 @@
 package com.ytech.models;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.UUID;
-
 import com.ytech.main.App;
 
 public class Orphan {

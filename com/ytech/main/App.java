@@ -1,10 +1,8 @@
 package com.ytech.main;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import com.ytech.graphics.Window;
@@ -26,7 +24,8 @@ public class App {
 
     public static void addOrphanage(String name, String location, int capacity, int currentChildren, String director,
             String phoneNumber, String email) {
-        orphanages.add(new Orphanage(name, location, capacity, currentChildren, director, director, email, new Date()));
+        orphanages.add(
+                new Orphanage(name, location, capacity, currentChildren, director, director, email, LocalDate.now()));
     }
 
     public static void initializeOrphanages() {
@@ -39,8 +38,7 @@ public class App {
                 "Marie Dupont",
                 "01 23 45 67 89",
                 "contact@saint-louis.org",
-                new Date(120, 0, 15) // 15 janvier 2020
-        ));
+                LocalDate.now()));
 
         orphanages.add(new Orphanage(
 
@@ -51,8 +49,7 @@ public class App {
                 "Jean Martin",
                 "04 56 78 90 12",
                 "info@maison-espoir.org",
-                new Date(118, 5, 10) // 10 juin 2018
-        ));
+                LocalDate.now()));
     }
 
     public static String formatDate(LocalDate date) {

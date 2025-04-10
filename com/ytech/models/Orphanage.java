@@ -1,7 +1,6 @@
 package com.ytech.models;
 
-import java.util.Date;
-import java.util.UUID;
+import java.time.LocalDate;
 
 public class Orphanage {
     private int id;
@@ -12,13 +11,13 @@ public class Orphanage {
     private String director;//
     private String phoneNumber;//
     private String email;//
-    private Date creationDate;
+    private LocalDate creationDate;
     public static int lastId = 0;
 
     // Constructeur complet
     public Orphanage(String name, String location, int capacity,
             int currentChildren, String director, String phoneNumber,
-            String email, Date creationDate) {
+            String email, LocalDate creationDate) {
         this.id = lastId;
         this.name = name;
         this.location = location;
@@ -66,7 +65,7 @@ public class Orphanage {
         return email;
     }
 
-    public Date getCreationDate() {
+    public LocalDate getCreationDate() {
         return creationDate;
     }
 
