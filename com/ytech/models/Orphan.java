@@ -1,7 +1,10 @@
 package com.ytech.models;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
+
+import com.ytech.main.App;
 
 public class Orphan {
     private int id;
@@ -9,8 +12,8 @@ public class Orphan {
     private String firstName;
     private String lastName;
     private int age;
-    private Date comingDate;
-    private Date lefDate;
+    private LocalDate comingDate;
+    private LocalDate leftDate;
     private String motif;
     private boolean avaible = true;
 
@@ -25,21 +28,23 @@ public class Orphan {
     }
 
     // Constructeur complet
-    public Orphan(String firstName, String lastName, int age, Date comingDate, Date lefDate) {
+    public Orphan(String firstName, String lastName, int age, LocalDate comingDate, int orphanage_id) {
         this.id = Orphan.lastId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
         this.comingDate = comingDate;
-        this.lefDate = lefDate;
+        this.orphanage_id = orphanage_id;
 
         Orphan.lastId++;
     }
 
     public String getFormattedInfo() {
         return String.format(
-                "<html><b>%s</b><br>"
-                        + "Age: %s ans<br>",
+                "<html><b>%s</b><br>" +
+                        "Date d'arrive : " + App.formatDate(comingDate) + "<br>"
+                        + "Age: %s ans<br>"
+                        + (isAvaible() ? "Peut etre adopte: " : getMotif() + "le " + App.formatDate(leftDate)),
 
                 fullName(), age);
     }
@@ -88,20 +93,20 @@ public class Orphan {
         this.age = age;
     }
 
-    public Date getComingDate() {
+    public LocalDate getComingDate() {
         return comingDate;
     }
 
-    public void setComingDate(Date comingDate) {
+    public void setComingDate(LocalDate comingDate) {
         this.comingDate = comingDate;
     }
 
-    public Date getLefDate() {
-        return lefDate;
+    public LocalDate getLeftDate() {
+        return leftDate;
     }
 
-    public void setLefDate(Date lefDate) {
-        this.lefDate = lefDate;
+    public void setLeftDate(LocalDate leftDate) {
+        this.leftDate = leftDate;
     }
 
     public String getMotif() {

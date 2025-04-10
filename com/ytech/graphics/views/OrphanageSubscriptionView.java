@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 public class OrphanageSubscriptionView extends YPanel {
+    private Orphanage orphanage;
     private List<Orphan> orphans = new ArrayList<>();
     private JPanel listPanel;
 
@@ -38,7 +39,6 @@ public class OrphanageSubscriptionView extends YPanel {
     private boolean allNumbersValid() {
         try {
 
-            Integer.parseInt(phoneNumberField.getText());
             Integer.parseInt(capacityField.getText());
             Integer.parseInt(currentChildren.getText());
 
@@ -67,10 +67,24 @@ public class OrphanageSubscriptionView extends YPanel {
             if (!allNumbersValid()) {
                 showDialog("Valeurs non valides", "Veuillez remplir les champs avec des valeurs convenables");
             } else {
-                App.addOrphanage(nameField.getText(), locationField.getText(),
-                        Integer.parseInt(capacityField.getText()), Integer.parseInt(currentChildren.getText()),
-                        directorField.getText(), Integer.parseInt(phoneNumberField.getText()),
-                        emailField.getText());
+                if (orphanage != null) {
+                    App.orphanages.set(orphanage.getId(),
+                            new Orphanage(
+
+                                    nameField.getText(),
+                                    locationField.getText(),
+                                    Integer.parseInt(capacityField.getText()),
+                                    Integer.parseInt(currentChildren.getText()),
+                                    directorField.getText(),
+                                    phoneNumberField.getText(),
+                                    emailField.getText(),
+                                    orphanage.getCreationDate()));
+                } else {
+                    App.addOrphanage(nameField.getText(), locationField.getText(),
+                            Integer.parseInt(capacityField.getText()), Integer.parseInt(currentChildren.getText()),
+                            directorField.getText(), phoneNumberField.getText(),
+                            emailField.getText());
+                }
                 goToPage(new OrphanageView());
             }
         }
@@ -95,7 +109,7 @@ public class OrphanageSubscriptionView extends YPanel {
         // setPadding(20);
 
         // Créer le titre
-        JLabel titleLabel = new JLabel("AJOUTER UN ORPHELINAT");
+        JLabel titleLabel = new JLabel("EDITER UN ORPHELINAT");
         titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD, 48f));
         titleLabel.setForeground(YComponent.primaryColor);
         add(titleLabel, BorderLayout.NORTH);
@@ -113,6 +127,7 @@ public class OrphanageSubscriptionView extends YPanel {
         listPanel = new YPanel();
         listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.Y_AXIS));
         implementFields(listPanel);
+        listPanel.setPreferredSize(new Dimension(getWidth(), 400));
         JScrollPane scrollPane = new JScrollPane(listPanel);
         add(scrollPane, BorderLayout.CENTER);
 
@@ -129,6 +144,20 @@ public class OrphanageSubscriptionView extends YPanel {
         bottom.add(addButton, BorderLayout.EAST);
 
         add(bottom, BorderLayout.SOUTH);
+
+    }
+
+    public OrphanageSubscriptionView(Orphanage orphanage) {
+        this();
+        this.orphanage = orphanage;
+
+        nameField.setText(orphanage.getName());
+        directorField.setText(orphanage.getDirector());
+        emailField.setText(orphanage.getEmail());
+        locationField.setText(orphanage.getLocation());
+        phoneNumberField.setText(orphanage.getPhoneNumber());
+        capacityField.setText("" + orphanage.getCapacity());
+        currentChildren.setText("" + orphanage.getCurrentChildren());
 
     }
 

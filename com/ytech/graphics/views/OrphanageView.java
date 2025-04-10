@@ -62,16 +62,19 @@ public class OrphanageView extends YPanel {
                     orphanages.indexOf(orphanage) % 2 == 0);
 
             // Boutons d'action
-            YButton detailsButton = new YButton("Détails");
-            detailsButton.addActionListener(e -> goToPage(orphanage));
+            YButton detailsButton = new YButton("Details");
+            detailsButton.addActionListener(e -> showDetails(orphanage));
+            YButton orphains = new YButton("Orphelins", 2);
+            orphains.addActionListener(e -> goToPage(orphanage));
 
-            YButton editButton = new YButton("Modifier");
-            editButton.addActionListener(e -> editOrphanage(orphanage));
+            YButton editButton = new YButton("Modifier", 1);
+            editButton.addActionListener(e -> goToPage(new OrphanageSubscriptionView(orphanage)));
 
             YButton deleteButton = new YButton("Supprimer", -1); // Type -1 = rouge
             deleteButton.addActionListener(e -> deleteOrphanage(orphanage));
 
             item.addButton(detailsButton);
+            item.addButton(orphains);
             item.addButton(editButton);
             item.addButton(deleteButton);
 
@@ -98,10 +101,6 @@ public class OrphanageView extends YPanel {
         App.window.repaint();
     }
 
-    private void addOrphanage(ActionEvent e) {
-        App.window.setContentPane(new OrphanageSubscriptionView());
-    }
-
     private void showDetails(Orphanage orphanage) {
         JLabel detailsLabel = new JLabel(orphanage.getFormattedInfo());
         detailsLabel.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -113,18 +112,13 @@ public class OrphanageView extends YPanel {
                 JOptionPane.INFORMATION_MESSAGE);
     }
 
-    private void editOrphanage(Orphanage orphanage) {
-        // Logique de modification
-        JOptionPane.showMessageDialog(this, "Modification de " + orphanage.getName());
-    }
-
     private void deleteOrphanage(Orphanage orphanage) {
         int confirm = JOptionPane.showConfirmDialog(this,
                 "Voulez-vous vraiment supprimer " + orphanage.getName() + "?",
                 "Confirmation", JOptionPane.YES_NO_OPTION);
 
         if (confirm == JOptionPane.YES_OPTION) {
-            orphanages.remove(orphanage);
+            App.orphanages.remove(orphanage);
             refreshOrphanageList();
         }
     }

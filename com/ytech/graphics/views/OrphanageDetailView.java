@@ -9,6 +9,7 @@ import com.ytech.models.Orphan;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -47,10 +48,16 @@ public class OrphanageDetailView extends YPanel {
         JScrollPane scrollPane = new JScrollPane(listPanel);
         add(scrollPane, BorderLayout.CENTER);
 
+        YPanel bottom = new YPanel();
         // Bouton d'ajout
-        YButton addButton = new YButton("Ajouter un orphelin", 0); // Type 0 = vert
-        addButton.addActionListener(e -> goToPage(new OrphanSubscriptionView()));
-        add(addButton, BorderLayout.SOUTH);
+        YButton addButton = new YButton("AJOUTER UN ORPHELIN", 0); // Type 0 = vert
+        addButton.addActionListener(e -> goToPage(new OrphanSubscriptionView(this.orphanage)));
+        YButton backButton = new YButton("RETOUR", 1);
+        backButton.addActionListener(e -> goToPage(new OrphanageView()));
+
+        bottom.add(backButton, BorderLayout.WEST);
+        bottom.add(addButton, BorderLayout.EAST);
+        add(bottom, BorderLayout.SOUTH);
 
         // Charger la liste
         refreshOrphanageList();
@@ -63,22 +70,30 @@ public class OrphanageDetailView extends YPanel {
             if (orphan.getOrphanage_id() == orphanage.getId()) {
                 ListItem item = new ListItem(orphan.fullName(),
                         "Age: " + orphan.getAge() +
-                                (orphan.isAvaible() ? " | Disponible" : " | A quitte l'orphelinat"),
+                                (orphan.isAvaible() ? " | Disponible" : " | " + orphan.getMotif()),
                         orphans.indexOf(orphan) % 2 == 0);
 
                 // Boutons d'action
                 YButton detailsButton = new YButton("Détails");
                 detailsButton.addActionListener(e -> showDetails(orphan));
 
-                YButton editButton = new YButton("Modifier");
-                editButton.addActionListener(e -> editOrphanage(orphan));
+                YButton editButton = new YButton("Modifier", 1);
+                editButton.addActionListener(e -> goToPage(new OrphanSubscriptionView(orphanage, orphan)));
+                YButton adopButton = new YButton("Adopte", 0);
+                adopButton.addActionListener(e -> adopt(orphan));
+                YButton emanciperButton = new YButton("Emaciper", 2);
+                emanciperButton.addActionListener(e -> emanciper(orphan));
 
                 YButton deleteButton = new YButton("Supprimer", -1); // Type -1 = rouge
                 deleteButton.addActionListener(e -> deleteOrphanage(orphan));
 
                 item.addButton(detailsButton);
-                item.addButton(editButton);
-                item.addButton(deleteButton);
+                if (orphan.isAvaible()) {
+                    item.addButton(editButton);
+                    item.addButton(emanciperButton);
+                    item.addButton(adopButton);
+                    item.addButton(deleteButton);
+                }
 
                 listPanel.add(item);
                 listPanel.add(Box.createVerticalStrut(10));
@@ -87,6 +102,20 @@ public class OrphanageDetailView extends YPanel {
 
         listPanel.revalidate();
         listPanel.repaint();
+    }
+
+    private void emanciper(Orphan orphan) {
+        orphan.setAvaible(false);
+        orphan.setMotif("S'est emancipe");
+        orphan.setLeftDate(LocalDate.now());
+        refreshOrphanageList();
+    }
+
+    private void adopt(Orphan orphan) {
+        orphan.setAvaible(false);
+        orphan.setMotif("A ete adopte");
+        orphan.setLeftDate(LocalDate.now());
+        refreshOrphanageList();
     }
 
     private void showDetails(Orphan orphan) {
@@ -100,18 +129,13 @@ public class OrphanageDetailView extends YPanel {
                 JOptionPane.INFORMATION_MESSAGE);
     }
 
-    private void editOrphanage(Orphan orphan) {
-        // Logique de modification
-        JOptionPane.showMessageDialog(this, "Modification de " + orphan.getFirstName());
-    }
-
     private void deleteOrphanage(Orphan orphan) {
         int confirm = JOptionPane.showConfirmDialog(this,
                 "Voulez-vous vraiment supprimer " + orphan.fullName() + "?",
                 "Confirmation", JOptionPane.YES_NO_OPTION);
 
         if (confirm == JOptionPane.YES_OPTION) {
-            orphans.remove(orphan);
+            App.orphans.remove(orphan);
             refreshOrphanageList();
         }
     }

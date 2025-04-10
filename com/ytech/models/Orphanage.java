@@ -114,7 +114,8 @@ public class Orphanage {
                         + "Lieu: %s<br>"
                         + "Capacité: %d/%d<br>"
                         + "Directeur: %s<br>"
-                        + "Contact %s | %s</html>",
+                        + "Contact: %s | <br>"
+                        + "Email: %s</html>",
                 name, location, currentChildren, capacity,
                 director, phoneNumber, email);
     }

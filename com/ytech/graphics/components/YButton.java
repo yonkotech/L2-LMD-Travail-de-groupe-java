@@ -13,10 +13,16 @@ public class YButton extends JButton {
     public YButton(String text, int type) {
         super(text);
         if (type == -1) {
-            primaryColor = Color.RED;
+            primaryColor = new Color(150, 0, 0);
 
         } else if (type == 0) {
-            primaryColor = Color.GREEN;
+            primaryColor = new Color(0, 150, 0);
+        } else if (type == 1) {
+            primaryColor = new Color(0, 0, 150);
+
+        } else if (type == 2) {
+            primaryColor = new Color(50, 100, 50);
+
         }
         init();
     }

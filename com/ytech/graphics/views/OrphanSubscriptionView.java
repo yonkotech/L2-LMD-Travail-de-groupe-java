@@ -14,10 +14,87 @@ import java.util.Date;
 import java.util.List;
 
 public class OrphanSubscriptionView extends YPanel {
-    private List<Orphan> orphans = new ArrayList<>();
+    private Orphanage orphanage;
+    private Orphan orphan;
     private JPanel listPanel;
 
-    public OrphanSubscriptionView() {
+    private YTextField firstNameField = new YTextField("Nom de l'orphelin");
+    private YTextField lastNameField = new YTextField("Post de l'orphelin");
+    private YTextField ageField = new YTextField("Age de l'orphelin");
+
+    private boolean allFieldsFilled() {
+        return !(firstNameField.getText().isBlank() ||
+                lastNameField.getText().isBlank() ||
+                ageField.getText().isBlank());
+    }
+
+    private boolean allNumbersValid() {
+        try {
+
+            Integer.parseInt(ageField.getText());
+
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private void showDialog(String title, String message) {
+        JLabel messageLabel = new JLabel(message);
+        messageLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+
+        JOptionPane.showMessageDialog(
+                this,
+                messageLabel,
+                title,
+                JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public void save() {
+
+        if (!allFieldsFilled()) {
+            showDialog("Champs non remplis", "Veuillez remplir tous les champs");
+        } else {
+            if (!allNumbersValid()) {
+                showDialog("Valeurs non valides", "Veuillez remplir les champs avec des valeurs convenables");
+            } else {
+                if (orphanage.getCurrentChildren() >= orphanage.getCapacity()) {
+                    showDialog("Orphelinat complet",
+                            "L'orphelinat " + orphanage.getName() + " a atteint le nombre maximal d'enfants");
+
+                } else {
+                    if (this.orphan != null) {
+                        App.orphans.set(App.orphans.indexOf(this.orphan), new Orphan(
+                                firstNameField.getText(), lastNameField.getText(),
+                                Integer.parseInt(ageField.getText()),
+                                this.orphan.getComingDate(),
+                                orphanage.getId()));
+                    } else {
+
+                        App.addOrphan(firstNameField.getText(), lastNameField.getText(),
+                                Integer.parseInt(ageField.getText()),
+                                orphanage.getId());
+                    }
+
+                }
+
+                goToPage(new OrphanageDetailView(orphanage));
+            }
+        }
+
+    }
+
+    private void implementFields(JPanel listPanel) {
+        listPanel.add(firstNameField);
+        listPanel.add(lastNameField);
+        listPanel.add(ageField);
+        listPanel.add(new YPanel());
+        listPanel.add(new YPanel());
+    }
+
+    public OrphanSubscriptionView(Orphanage orphanage) {
+
+        this.orphanage = orphanage;
 
         // Configurer le layout principal
         setLayout(new BorderLayout());
@@ -29,16 +106,49 @@ public class OrphanSubscriptionView extends YPanel {
         titleLabel.setForeground(YComponent.primaryColor);
         add(titleLabel, BorderLayout.NORTH);
 
-        // Panel pour la liste des orphelinats
+        // Panel pour les champs d'orphelins
         listPanel = new YPanel();
         listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.Y_AXIS));
-        listPanel.add(new YButton("BOUTON"));
+        implementFields(listPanel);
+
+        JScrollPane scrollPane = new JScrollPane(listPanel);
+        add(scrollPane, BorderLayout.CENTER);
 
         // // Bouton d'ajout
-        YButton addButton = new YButton("ENREGISTRER", 0);
-        addButton.addActionListener(e -> goToPage(new OrphanageDetailView(App.lastOrphanage)));
-        add(addButton, BorderLayout.SOUTH);
+        YPanel bottom = new YPanel();
 
+        YButton addButton = new YButton("ENREGISTRER", 0);
+        addButton.addActionListener(e -> save());
+
+        YButton cancelButton = new YButton("ANNULER", -1);
+        cancelButton.addActionListener(e -> cancel());
+
+        bottom.add(cancelButton, BorderLayout.WEST);
+        bottom.add(addButton, BorderLayout.EAST);
+
+        add(bottom, BorderLayout.SOUTH);
+
+    }
+
+    public OrphanSubscriptionView(Orphanage orphanage, Orphan orphan) {
+
+        this(orphanage);
+        this.orphan = orphan;
+
+        this.firstNameField.setText(orphan.getFirstName());
+        this.lastNameField.setText(orphan.getLastName());
+        this.ageField.setText("" + orphan.getAge());
+
+    }
+
+    private void cancel() {
+        int confirm = JOptionPane.showConfirmDialog(this,
+                "Voulez-vous vraiment annuler ?",
+                "Confirmation", JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            goToPage(new OrphanageDetailView(orphanage));
+        }
     }
 
     private void goToPage(YPanel target) {

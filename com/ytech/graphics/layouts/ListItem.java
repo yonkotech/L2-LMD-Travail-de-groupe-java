@@ -5,8 +5,6 @@ import javax.swing.*;
 import com.ytech.graphics.components.YComponent;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -21,13 +19,10 @@ public class ListItem extends JPanel {
     private boolean hover = false;
     private boolean pressed = false;
 
-    private Color primaryColor = YComponent.primaryColor;
     private Color backgroundColor = new Color(200, 200, 200);
     private Color backgroundOddColor = new Color(230, 230, 230);
     private Color hoverColor = new Color(50, 50, 50);
     private Color pressedColor = new Color(160, 160, 160);
-
-    private ActionEvent clickedAction;
 
     public ListItem() {
         this("", "", false);
@@ -81,10 +76,6 @@ public class ListItem extends JPanel {
 
         buttonsPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
         buttonsPanel.setOpaque(false);
-    }
-
-    public void setActionEvent(ActionEvent a) {
-        this.clickedAction = a;
     }
 
     private void setupMouseListeners() {
