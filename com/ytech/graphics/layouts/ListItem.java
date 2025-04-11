@@ -19,7 +19,8 @@ public class ListItem extends JPanel {
     private boolean hover = false;
     private boolean pressed = false;
 
-    private Color backgroundColor = new Color(200, 200, 200);
+    private Color backgroundColor = new Color(60, 60, 60);
+    private Color backgroundOddColor = new Color(10, 10, 10);
 
     public Color getBackgroundColor() {
         return backgroundColor;
@@ -28,8 +29,6 @@ public class ListItem extends JPanel {
     public void setBackgroundColor(Color backgroundColor) {
         this.backgroundColor = backgroundColor;
     }
-
-    private Color backgroundOddColor = new Color(230, 230, 230);
 
     public Color getBackgroundOddColor() {
         return backgroundOddColor;
@@ -40,7 +39,6 @@ public class ListItem extends JPanel {
     }
 
     private Color hoverColor = new Color(20, 20, 20);
-    private Color pressedColor = new Color(160, 160, 160);
 
     public ListItem() {
         this("", "", false);
@@ -50,6 +48,7 @@ public class ListItem extends JPanel {
     public ListItem(String title, String subtitle, boolean odd) {
         this.buttons = new ArrayList<>();
         this.odd = odd;
+
         initComponents(title, subtitle);
         layoutComponents();
         setupMouseListeners();
@@ -90,6 +89,7 @@ public class ListItem extends JPanel {
         textPanel.setOpaque(false);
         textPanel.add(titleLabel);
         textPanel.add(subtitleLabel);
+        textPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 0, 0));
 
         add(textPanel, BorderLayout.CENTER);
 
@@ -97,6 +97,8 @@ public class ListItem extends JPanel {
         rightPanel.setBackground(getColor());
         rightPanel.setOpaque(false);
         rightPanel.add(buttonsPanel);
+        rightPanel.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
+
         buttonsPanel.setBackground(getColor());
         add(rightPanel, BorderLayout.EAST);
 
@@ -124,32 +126,30 @@ public class ListItem extends JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 pressed = true;
-                setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                 updateAppearance();
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
                 pressed = false;
-
-                setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
                 updateAppearance();
             }
         });
     }
 
     private void updateAppearance() {
-        Color bgColor;
 
         if (pressed) {
-            bgColor = pressedColor;
         } else if (hover) {
-            bgColor = hoverColor;
+            setBorder(BorderFactory.createMatteBorder(0, 4, 0, 0, YComponent.primaryColor));
         } else {
-            bgColor = getColor();
-        }
+            if (odd) {
+                setBorder(BorderFactory.createMatteBorder(0, 4, 0, 0, backgroundColor));
+            } else {
+                setBorder(BorderFactory.createMatteBorder(0, 4, 0, 0, backgroundOddColor));
 
-        setBackground(bgColor);
+            }
+        }
         repaint();
     }
 
@@ -157,15 +157,37 @@ public class ListItem extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        // Dégradé pour un effet plus moderne
-        if (hover || pressed) {
+        // Degrade pour un effet plus moderne
+        if (hover) {
             Graphics2D g2d = (Graphics2D) g;
-            Color startColor = pressed ? pressedColor : hoverColor;
-            Color endColor = new Color(startColor.getRed(), startColor.getGreen(), startColor.getBlue(), 150);
+            Color startColor = hoverColor;
+            Color endColor = new Color(startColor.getRed(), startColor.getGreen(), startColor.getBlue(), 200);
 
             GradientPaint gp = new GradientPaint(
                     0, 0, startColor,
                     getWidth(), getHeight(), endColor);
+
+            g2d.setPaint(gp);
+            g2d.fillRect(0, 0, getWidth(), getHeight());
+        } else if (odd) {
+            Graphics2D g2d = (Graphics2D) g;
+            Color startColor = backgroundOddColor;
+
+            GradientPaint gp = new GradientPaint(
+                    0, 0, startColor,
+                    getWidth(), getHeight(), startColor);
+
+            g2d.setPaint(gp);
+            g2d.fillRect(0, 0, getWidth(), getHeight());
+        } else
+
+        {
+            Graphics2D g2d = (Graphics2D) g;
+            Color startColor = backgroundColor;
+
+            GradientPaint gp = new GradientPaint(
+                    0, 0, startColor,
+                    getWidth(), getHeight(), startColor);
 
             g2d.setPaint(gp);
             g2d.fillRect(0, 0, getWidth(), getHeight());

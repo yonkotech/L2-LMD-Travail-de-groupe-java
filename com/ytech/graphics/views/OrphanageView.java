@@ -17,31 +17,28 @@ public class OrphanageView extends YPanel {
         setLayout(new BorderLayout());
         // setPadding(20);
 
-        // Créer le titre
-        JLabel titleLabel = new JLabel("Gestion des Orphelinats");
+        // Creer le titre
+        JLabel titleLabel = new JLabel("GESTION DES ORPHELINATS");
         titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD, 48f));
         titleLabel.setForeground(YComponent.primaryColor);
         add(titleLabel, BorderLayout.NORTH);
-
-        // Panel pour les contrôles de filtrage
-        YPanel filterPanel = new YPanel();
-        filterPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
-
-        filterPanel.add(new YCheckbox("Filtrer par capacité"));
-        filterPanel.add(new YButton("Rechercher"));
-
-        add(filterPanel, BorderLayout.CENTER);
 
         // Panel pour la liste des orphelinats
         listPanel = new YPanel();
         listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.Y_AXIS));
         JScrollPane scrollPane = new JScrollPane(listPanel);
+        scrollPane.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 0, YComponent.primaryColor));
         add(scrollPane, BorderLayout.CENTER);
 
+        YPanel bottom = new YPanel();
         // Bouton d'ajout
-        YButton addButton = new YButton("Ajouter un orphelinat", 0); // Type 0 = vert
+        YButton addButton = new YButton("AJOUTER UN ORPHELINAT", 0); // Type 0 = vert
         addButton.addActionListener(e -> goToPage(new OrphanageSubscriptionView()));
-        add(addButton, BorderLayout.SOUTH);
+
+        bottom.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
+        bottom.add(addButton);
+
+        add(bottom, BorderLayout.SOUTH);
 
         // Charger la liste
         refreshOrphanageList();
@@ -54,7 +51,7 @@ public class OrphanageView extends YPanel {
         for (Orphanage orphanage : App.orphanages) {
             ListItem item = new ListItem(orphanage.getName(),
                     "Adresse: " + orphanage.getLocation() +
-                            " | Capacité: " + orphanage.getCapacity(),
+                            " | Capacite: " + orphanage.getCapacity(),
                     i % 2 == 0);
             i++;
 
@@ -105,7 +102,7 @@ public class OrphanageView extends YPanel {
         JOptionPane.showMessageDialog(
                 this,
                 detailsLabel,
-                "Détails de " + orphanage.getName(),
+                "Details de " + orphanage.getName(),
                 JOptionPane.INFORMATION_MESSAGE);
     }
 

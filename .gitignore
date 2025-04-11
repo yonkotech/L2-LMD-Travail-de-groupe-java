@@ -1,0 +1,6 @@
+#Fichiers zip
+*.zip
+#Fichiers jar
+./*.jar
+#Dossier bin
+bin/

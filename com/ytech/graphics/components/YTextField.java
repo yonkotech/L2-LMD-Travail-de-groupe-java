@@ -34,12 +34,12 @@ public class YTextField extends JPanel {
 
         setLayout(new OverlayLayout(this));
         setOpaque(false);
-        setPreferredSize(new Dimension(200, 35)); // Hauteur réduite
+        setPreferredSize(new Dimension(200, 35)); // Hauteur reduite
 
         // Configuration du champ de texte
         textField = new JTextField();
         textField.setPreferredSize(new Dimension(textField.getWidth(), 35));
-        textField.setBorder(BorderFactory.createEmptyBorder(15, 2, 3, 2)); // Padding ajusté
+        textField.setBorder(BorderFactory.createEmptyBorder(15, 2, 3, 2)); // Padding ajuste
         textField.setOpaque(false);
         textField.setFont(textField.getFont().deriveFont(Font.BOLD, 14f));
         textField.setForeground(YComponent.primaryColor);
@@ -117,9 +117,9 @@ public class YTextField extends JPanel {
 
     private void animateLabel(boolean floatUp) {
         if (floatUp) {
-            floatingLabel.setFont(floatingLabel.getFont().deriveFont(11f)); // Taille réduite
+            floatingLabel.setFont(floatingLabel.getFont().deriveFont(11f)); // Taille reduite
             floatingLabel.setForeground(focusColor);
-            floatingLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 15, 0)); // Position ajustée
+            floatingLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 15, 0)); // Position ajustee
         } else {
             floatingLabel.setFont(textField.getFont());
             floatingLabel.setForeground(labelColor);
@@ -127,7 +127,7 @@ public class YTextField extends JPanel {
         }
     }
 
-    // Méthodes d'accès
+    // Methodes d'accès
     public String getText() {
         return textField.getText();
     }

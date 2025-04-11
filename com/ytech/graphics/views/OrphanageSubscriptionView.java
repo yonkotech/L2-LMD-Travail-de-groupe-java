@@ -100,7 +100,7 @@ public class OrphanageSubscriptionView extends YPanel {
         setLayout(new BorderLayout());
         // setPadding(20);
 
-        // Créer le titre
+        // Creer le titre
         JLabel titleLabel = new JLabel("EDITER UN ORPHELINAT");
         titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD, 48f));
         titleLabel.setForeground(YComponent.primaryColor);
@@ -110,7 +110,7 @@ public class OrphanageSubscriptionView extends YPanel {
         YPanel filterPanel = new YPanel();
         filterPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
 
-        filterPanel.add(new YCheckbox("Filtrer par capacité"));
+        filterPanel.add(new YCheckbox("Filtrer par capacite"));
         filterPanel.add(new YButton("Rechercher"));
 
         add(filterPanel, BorderLayout.CENTER);
@@ -132,6 +132,7 @@ public class OrphanageSubscriptionView extends YPanel {
         YButton cancelButton = new YButton("ANNULER", -1);
         cancelButton.addActionListener(e -> cancel());
 
+        bottom.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
         bottom.add(cancelButton, BorderLayout.WEST);
         bottom.add(addButton, BorderLayout.EAST);
 

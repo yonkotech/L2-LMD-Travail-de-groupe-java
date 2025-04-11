@@ -108,7 +108,7 @@ public class OrphanSubscriptionView extends YPanel {
         setLayout(new BorderLayout());
         // setPadding(20);
 
-        // Créer le titre
+        // Creer le titre
         JLabel titleLabel = new JLabel("AJOUTER UN ORPHELIN");
         titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD, 48f));
         titleLabel.setForeground(YComponent.primaryColor);

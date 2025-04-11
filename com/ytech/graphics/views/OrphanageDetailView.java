@@ -9,11 +9,8 @@ import com.ytech.models.Orphan;
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class OrphanageDetailView extends YPanel {
-    private List<Orphan> orphans = new ArrayList<>();
     private JPanel listPanel;
     private Orphanage orphanage;
 
@@ -25,25 +22,17 @@ public class OrphanageDetailView extends YPanel {
         setLayout(new BorderLayout());
         // setPadding(20);
 
-        // Créer le titre
+        // Creer le titre
         JLabel titleLabel = new JLabel(orphanage.getName());
         titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD, 48f));
         titleLabel.setForeground(YComponent.primaryColor);
         add(titleLabel, BorderLayout.NORTH);
 
-        // Panel pour les contrôles de filtrage
-        YPanel filterPanel = new YPanel();
-        filterPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
-
-        filterPanel.add(new YCheckbox("Filtrer par capacité"));
-        filterPanel.add(new YButton("Rechercher"));
-
-        add(filterPanel, BorderLayout.CENTER);
-
         // Panel pour la liste des orphelinats
         listPanel = new YPanel();
         listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.Y_AXIS));
         JScrollPane scrollPane = new JScrollPane(listPanel);
+        scrollPane.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 0, YComponent.primaryColor));
         add(scrollPane, BorderLayout.CENTER);
 
         YPanel bottom = new YPanel();
@@ -53,6 +42,7 @@ public class OrphanageDetailView extends YPanel {
         YButton backButton = new YButton("RETOUR", 1);
         backButton.addActionListener(e -> goToPage(new OrphanageView()));
 
+        bottom.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
         bottom.add(backButton, BorderLayout.WEST);
         bottom.add(addButton, BorderLayout.EAST);
         add(bottom, BorderLayout.SOUTH);
@@ -79,15 +69,17 @@ public class OrphanageDetailView extends YPanel {
     private void refreshOrphanageList() {
         listPanel.removeAll();
 
+        int i = 0;
         for (Orphan orphan : App.orphans) {
             if (orphan.getOrphanage_id() == orphanage.getId()) {
                 ListItem item = new ListItem(orphan.fullName(),
                         "Age: " + orphan.getAge() +
                                 (orphan.isAvaible() ? " | Disponible" : " | " + orphan.getMotif()),
-                        orphans.indexOf(orphan) % 2 == 0);
+                        i % 2 == 0);
+                i++;
 
                 // Boutons d'action
-                YButton detailsButton = new YButton("Détails");
+                YButton detailsButton = new YButton("Details");
                 detailsButton.addActionListener(e -> showDetails(orphan));
 
                 YButton editButton = new YButton("Modifier", 1);
@@ -101,12 +93,12 @@ public class OrphanageDetailView extends YPanel {
                 deleteButton.addActionListener(e -> deleteOrphanage(orphan));
 
                 item.addButton(detailsButton);
+                item.addButton(editButton);
                 if (orphan.isAvaible()) {
-                    item.addButton(editButton);
                     item.addButton(emanciperButton);
                     item.addButton(adopButton);
-                    item.addButton(deleteButton);
                 }
+                item.addButton(deleteButton);
 
                 listPanel.add(item);
                 listPanel.add(Box.createVerticalStrut(10));
@@ -138,7 +130,7 @@ public class OrphanageDetailView extends YPanel {
         JOptionPane.showMessageDialog(
                 this,
                 detailsLabel,
-                "Détails de " + orphan.fullName(),
+                "Details de " + orphan.fullName(),
                 JOptionPane.INFORMATION_MESSAGE);
     }
 

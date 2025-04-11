@@ -98,7 +98,7 @@ public class Orphanage {
         this.email = email;
     }
 
-    // Méthodes utiles
+    // Methodes utiles
     public int getAvailableSpaces() {
         return capacity - currentChildren;
     }
@@ -111,7 +111,7 @@ public class Orphanage {
         return String.format(
                 "<html><b>%s</b><br>"
                         + "Lieu: %s<br>"
-                        + "Capacité: %d/%d<br>"
+                        + "Capacite: %d/%d<br>"
                         + "Directeur: %s<br>"
                         + "Contact: %s | <br>"
                         + "Email: %s</html>",
