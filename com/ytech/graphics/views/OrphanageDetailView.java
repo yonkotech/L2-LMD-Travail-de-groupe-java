@@ -67,9 +67,11 @@ public class OrphanageDetailView extends YPanel {
     }
 
     private void refreshOrphanageList() {
+
         listPanel.removeAll();
 
         int i = 0;
+
         for (Orphan orphan : App.orphans) {
             if (orphan.getOrphanage_id() == orphanage.getId()) {
                 ListItem item = new ListItem(orphan.fullName(),
@@ -125,7 +127,7 @@ public class OrphanageDetailView extends YPanel {
 
     private void showDetails(Orphan orphan) {
         JLabel detailsLabel = new JLabel(orphan.getFormattedInfo());
-        detailsLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        detailsLabel.setFont(new Font("Poppins", Font.PLAIN, 14));
 
         JOptionPane.showMessageDialog(
                 this,

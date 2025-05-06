@@ -1,6 +1,9 @@
 package com.ytech.graphics.components;
 
 import javax.swing.*;
+
+import com.ytech.common.AppTheme;
+
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -8,7 +11,6 @@ import java.awt.event.MouseEvent;
 public class YButton extends JButton {
 
     private Color primaryColor = new Color(30, 144, 255);
-    private Color backgroundColor = new Color(241, 241, 241);
 
     public YButton(String text, int type) {
         super(text);
@@ -38,7 +40,7 @@ public class YButton extends JButton {
         setFont(getFont().deriveFont(Font.BOLD).deriveFont(16f));
         setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(primaryColor, 2),
                 BorderFactory.createEmptyBorder(3, 8, 3, 8)));
-        setBackground(backgroundColor);
+        setBackground(AppTheme.theme.surfaceColor);
         setForeground(primaryColor);
         setFocusPainted(false);
         setContentAreaFilled(false);
@@ -53,13 +55,13 @@ public class YButton extends JButton {
             @Override
             public void mouseEntered(MouseEvent e) {
                 setBackground(primaryColor);
-                setForeground(backgroundColor);
+                setForeground(AppTheme.theme.surfaceColor);
                 repaint();
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                setBackground(backgroundColor);
+                setBackground(AppTheme.theme.surfaceColor);
                 setForeground(primaryColor);
                 repaint();
             }
@@ -100,7 +102,6 @@ public class YButton extends JButton {
     }
 
     public void setBackgroundColor(Color color) {
-        this.backgroundColor = color;
         setBackground(color);
         repaint();
     }

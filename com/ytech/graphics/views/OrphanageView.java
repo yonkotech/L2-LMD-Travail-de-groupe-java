@@ -1,5 +1,6 @@
 package com.ytech.graphics.views;
 
+import com.ytech.common.AppTheme;
 import com.ytech.graphics.components.*;
 import com.ytech.graphics.layouts.ListItem;
 import com.ytech.main.App;
@@ -18,7 +19,7 @@ public class OrphanageView extends YPanel {
         // setPadding(20);
 
         // Creer le titre
-        JLabel titleLabel = new JLabel("GESTION DES ORPHELINATS");
+        JLabel titleLabel = new JLabel("Liste d'orphelinats");
         titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD, 48f));
         titleLabel.setForeground(YComponent.primaryColor);
         add(titleLabel, BorderLayout.NORTH);
@@ -96,8 +97,9 @@ public class OrphanageView extends YPanel {
     }
 
     private void showDetails(Orphanage orphanage) {
+
         JLabel detailsLabel = new JLabel(orphanage.getFormattedInfo());
-        detailsLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        detailsLabel.setFont(new Font("Poppins", Font.PLAIN, 14));
 
         JOptionPane.showMessageDialog(
                 this,

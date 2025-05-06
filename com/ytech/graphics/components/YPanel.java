@@ -6,6 +6,8 @@ import java.awt.Color;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
+import com.ytech.common.AppTheme;
+
 public class YPanel extends JPanel {
 
     public YPanel() {
@@ -15,7 +17,7 @@ public class YPanel extends JPanel {
     private void init() {
         YComponent.applyCommonStyle(this);
         setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        this.setBackground(new Color(30, 30, 30));
+        this.setBackground(AppTheme.theme.surfaceColor);
     }
 
     public YPanel(CardLayout mainCardLayout) {

@@ -2,6 +2,7 @@ package com.ytech.graphics.layouts;
 
 import javax.swing.*;
 
+import com.ytech.common.AppTheme;
 import com.ytech.graphics.components.YComponent;
 
 import java.awt.*;
@@ -19,8 +20,8 @@ public class ListItem extends JPanel {
     private boolean hover = false;
     private boolean pressed = false;
 
-    private Color backgroundColor = new Color(60, 60, 60);
-    private Color backgroundOddColor = new Color(10, 10, 10);
+    private Color backgroundColor = AppTheme.theme.onSurfaceColor;
+    private Color backgroundOddColor = AppTheme.theme.onCardColor;
 
     public Color getBackgroundColor() {
         return backgroundColor;
@@ -38,7 +39,7 @@ public class ListItem extends JPanel {
         this.backgroundOddColor = backgroundOddColor;
     }
 
-    private Color hoverColor = new Color(20, 20, 20);
+    private Color hoverColor = AppTheme.theme.tertiaryColor;
 
     public ListItem() {
         this("", "", false);
@@ -65,8 +66,8 @@ public class ListItem extends JPanel {
         titleLabel.getInsets(new Insets(10, 100, 10, 10));
 
         subtitleLabel = new JLabel(subtitle);
-        subtitleLabel.setFont(subtitleLabel.getFont().deriveFont(Font.ITALIC, 14f));
-        subtitleLabel.setForeground(Color.BLUE);
+        subtitleLabel.setFont(subtitleLabel.getFont().deriveFont(Font.BOLD, 14f));
+        subtitleLabel.setForeground(YComponent.primaryColor);
 
         buttonsPanel = new JPanel();
     }
