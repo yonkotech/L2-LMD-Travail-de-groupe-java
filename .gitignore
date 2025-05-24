@@ -2,5 +2,6 @@
 *.zip
 #Fichiers jar
 ./*.jar
+./*.class
 #Dossier bin
 bin/

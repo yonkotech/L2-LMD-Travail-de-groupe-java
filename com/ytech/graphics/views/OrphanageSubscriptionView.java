@@ -24,15 +24,13 @@ public class OrphanageSubscriptionView extends YPanel {
                 emailField.getText().isBlank() ||
                 locationField.getText().isBlank() ||
                 phoneNumberField.getText().isBlank() ||
-                capacityField.getText().isBlank() ||
-                currentChildren.getText().isBlank());
+                capacityField.getText().isBlank());
     }
 
     private boolean allNumbersValid() {
         try {
 
             Integer.parseInt(capacityField.getText());
-            Integer.parseInt(currentChildren.getText());
 
             return true;
         } catch (Exception e) {
@@ -66,14 +64,14 @@ public class OrphanageSubscriptionView extends YPanel {
                                     nameField.getText(),
                                     locationField.getText(),
                                     Integer.parseInt(capacityField.getText()),
-                                    Integer.parseInt(currentChildren.getText()),
+                                    0,
                                     directorField.getText(),
                                     phoneNumberField.getText(),
                                     emailField.getText(),
                                     orphanage.getCreationDate()));
                 } else {
                     App.addOrphanage(nameField.getText(), locationField.getText(),
-                            Integer.parseInt(capacityField.getText()), Integer.parseInt(currentChildren.getText()),
+                            Integer.parseInt(capacityField.getText()), 0,
                             directorField.getText(), phoneNumberField.getText(),
                             emailField.getText());
                 }
@@ -90,8 +88,6 @@ public class OrphanageSubscriptionView extends YPanel {
         listPanel.add(locationField);
         listPanel.add(phoneNumberField);
         listPanel.add(capacityField);
-        listPanel.add(currentChildren);
-
     }
 
     public OrphanageSubscriptionView() {
@@ -150,7 +146,6 @@ public class OrphanageSubscriptionView extends YPanel {
         locationField.setText(orphanage.getLocation());
         phoneNumberField.setText(orphanage.getPhoneNumber());
         capacityField.setText("" + orphanage.getCapacity());
-        currentChildren.setText("" + orphanage.getCurrentChildren());
 
     }
 

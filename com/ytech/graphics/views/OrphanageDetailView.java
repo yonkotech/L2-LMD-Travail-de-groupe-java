@@ -32,7 +32,7 @@ public class OrphanageDetailView extends YPanel {
         listPanel = new YPanel();
         listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.Y_AXIS));
         JScrollPane scrollPane = new JScrollPane(listPanel);
-        scrollPane.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 0, YComponent.primaryColor));
+        scrollPane.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, YComponent.primaryColor));
         add(scrollPane, BorderLayout.CENTER);
 
         YPanel bottom = new YPanel();

@@ -98,7 +98,6 @@ public class App {
 
         public static void addOrphan(String firstName, String lastName, int age, int orphanage_id, boolean sexe) {
                 orphans.add(new Orphan(
-
                                 firstName,
                                 lastName,
                                 age,
